@@ -29,5 +29,8 @@
     <string name="total">Total: %s</string>
     <string name="submit">Submit</string>
     <string name="new_lunch_order">New Lunch Order</string>
-    <string name="order_details">Entree: %1$s \nSide Dish: %2$s \nAccompaniment: %3$s \nTotal: %4$s \n\nThank you!</string>
+    <string name="order_details">Entree: %1$s \nprice: %2$s
+        \n\nSide Dish: %3$s \nprice: %4$s
+        \n\nAccompaniment: %5$s \n\nprice: %6$s
+        \nTotal: %7$s \n\n\nThank you!</string>
 </resources>

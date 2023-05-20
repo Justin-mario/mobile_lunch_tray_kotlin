@@ -54,9 +54,12 @@ fun CheckoutScreen(
             orderUiState.sideDish?.let { it2 ->
                 stringResource(
                     R.string.order_details,
-                    it,
-                    it1,
-                    it2,
+                    it.name,
+                    it.price,
+                    it1.name,
+                    it1.price,
+                    it2.name,
+                    it2.price,
                     orderUiState.orderTotalPrice
                 )
             }
