@@ -15,6 +15,8 @@
  */
 package com.example.lunchtray
 
+import android.content.Context
+import android.content.Intent
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -31,6 +33,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -172,12 +175,16 @@ fun LunchTrayApp() {
             }
 
             composable(route = LunchTrayScreen.Checkout.name) {
+                val context = LocalContext.current
                 CheckoutScreen(
                     orderUiState = uiState,
-                    onNextButtonClicked = {
-                        viewModel.resetOrder()
-                        navController.popBackStack(LunchTrayScreen.Start.name, inclusive = false)
-                                          },
+                    onSummitButtonClicked = {subject: String, summary: String ->
+                        shareOrder(context = context, subject = subject, summary = summary)
+                    },
+//                    onNextButtonClicked = {
+//                        viewModel.resetOrder()
+//                        navController.popBackStack(LunchTrayScreen.Start.name, inclusive = false)
+//                                          },
                     onCancelButtonClicked = {
                         viewModel.resetOrder()
                         navController.popBackStack(LunchTrayScreen.Start.name, inclusive = false)
@@ -190,6 +197,22 @@ fun LunchTrayApp() {
         }
 
     }
+}
+
+private fun shareOrder(context: Context, subject: String, summary: String){
+
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "Text/plain"
+        putExtra(Intent.EXTRA_SUBJECT, subject)
+        putExtra(Intent.EXTRA_TEXT, summary)
+    }
+    context.startActivity(
+        Intent.createChooser(
+            intent,
+            context.getString(R.string.order_summary)
+
+        )
+    )
 }
 
 
